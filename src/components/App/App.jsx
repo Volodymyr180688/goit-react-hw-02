@@ -38,12 +38,12 @@ const App = () => {
       )}
       {totalFeedback > 0 && (
         <div>
-          Total feedback: {totalFeedback}
+          Total: {totalFeedback}
         </div>
       )}
       {totalFeedback > 0 && (
         <div>
-          Positive feedback percentage: {positiveFeedback}%
+          Positive: {positiveFeedback}%
         </div>
       )}
     </div>
