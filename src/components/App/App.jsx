@@ -1,53 +1,45 @@
-import { useState, useEffect } from 'react';
-import css from './App.module.css';
-import Options from '../Options/Options';
-import Feedback from '../Feedback/Feedback';
-import Notification from '../Notification/Notification';
+import { useState, useEffect } from 'react'
+import Description from '../Description/Description'
+import Options from '../Options/Options'
+import Feedback from '../Feedback/Feedback'
+import Notification from '../Notification/Notification'
+import style from'./App.module.css'
 
-const App = () => {
-
-  const [feedback, setFeedback] = useState(() => {
+function App() {
+    const [feedback, setFeedback] = useState(() => {
     const savedFeedback = JSON.parse(localStorage.getItem('feedback'));
     return savedFeedback || { good: 0, neutral: 0, bad: 0 };
   });
-
 
   useEffect(() => {
     localStorage.setItem('feedback', JSON.stringify(feedback));
   }, [feedback]);
 
-  const updateFeedback = (feedbackType, value) => {
+
+  const updateFeedback = (feedbackType) => {
     setFeedback((prevFeedback) => ({
       ...prevFeedback,
-      [feedbackType]: value !== undefined ? value : prevFeedback[feedbackType] + 1
+      [feedbackType]: prevFeedback[feedbackType] + 1
     }));
   };
-
+    const resetFeedback = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positiveFeedback = totalFeedback > 0 ? Math.round((feedback.good / totalFeedback) * 100) : 0;
+  const positiveFeedback = totalFeedback > 0 ? Math.round((feedback.good / (feedback.good + feedback.bad)) * 100) : 0; 
 
   return (
-    <div className={css.container}>
-      <h1 className={css.title}>Sip Happens Café</h1>
-      <p className={css.description}>Please leave your feedback about our service by selecting one of the options below.</p>
-      <Options updateFeedback={updateFeedback} totalFeedback={totalFeedback} />
+    <div className={style.container}>
+      <Description />
+      <Options updateFeedback={updateFeedback} resetFeedback={resetFeedback} totalFeedback={totalFeedback} />
       {totalFeedback > 0 ? (
-        <Feedback feedback={feedback} />
+        <Feedback feedback={feedback} positiveFeedback={positiveFeedback} totalFeedback={totalFeedback} />
       ) : (
-        <Notification message="No feedback yet." />
+        <Notification />
       )}
-      {totalFeedback > 0 && (
-        <div>
-          Total: {totalFeedback}
-        </div>
-      )}
-      {totalFeedback > 0 && (
-        <div>
-          Positive: {positiveFeedback}%
-        </div>
-      )}
+      
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

@@ -1,11 +1,4 @@
 .container {
-  max-width: 620px;
-  margin: 20px auto;
-}
-.title {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.description {
-  margin-bottom: 20px;
+  max-width: 1280px;
+  margin: 40px;
 }

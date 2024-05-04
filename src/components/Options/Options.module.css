@@ -1,6 +1,5 @@
 .buttonList {
   display: flex;
-  max-width: 620px;
   gap: 10px;
   margin-right: auto;
   margin-left: auto;
