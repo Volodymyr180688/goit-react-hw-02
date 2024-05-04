@@ -26,7 +26,7 @@ function App() {
     setFeedback({ good: 0, neutral: 0, bad: 0 });
   };
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positiveFeedback = totalFeedback > 0 ? Math.round((feedback.good / (feedback.good + feedback.bad)) * 100) : 0; 
+  const positiveFeedback = totalFeedback > 0 ? Math.round(((feedback.good + feedback.neutral) / totalFeedback) * 100) : 0; 
 
   return (
     <div className={style.container}>
